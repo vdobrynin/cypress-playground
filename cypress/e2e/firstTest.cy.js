@@ -65,7 +65,7 @@ describe('locator syntax rules', () => {
     })
 
     // it('alias & then & wrap methods', () => {
-    it.only('child elements', () => {           //  save subject of the command
+    it('child elements', () => {           //  save subject of the command
         cy.contains('nb-card', 'Using the Grid').find('.row').find('button')
         // cy.contains('nb-card', 'Using the Grid').find('[for="inputEmail1"]').should('contain', 'Email') 
         // cy.contains('nb-card', 'Using the Grid').find('[for="inputPassword2"]').should('contain', 'Password')
@@ -77,15 +77,15 @@ describe('locator syntax rules', () => {
         cy.get('nb-card > nb-card-body [placeholder="Email"]')               // to find 5 child elements 
         cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]')             // 1 element
 
-        //--->                                 //---> CAN'T DO THINGS LIKE THIS below
+        // --->                                 //---> CAN'T DO THINGS LIKE THIS below
         // const firstForm = cy.contains('nb-card', 'Using the Grid')
-        // // const secondForm = cy.contains('nb-card', 'Basic form')
+        // const secondForm = cy.contains('nb-card', 'Basic form')
         // firstForm.find('[for="inputEmail1"]').should('contain', 'Email')
         // firstForm.find('[for="inputPassword2"]').should('contain', 'Password')
         // secondForm.find('[for="exampleInputEmail1"]').should('contain', 'Email address')
         // secondForm.find('[for="exampleInputPassword1"]').should('contain', 'Password')
 
-        // // ---> 1st. cypress alias style --> correct one (use @ for alias)
+        // ---> 1st. cypress alias style --> correct one (use @ for alias)
         // cy.contains('nb-card', 'Using the Grid').as('usingTheGrid')
         // cy.get('@usingTheGrid').find('[for="inputEmail1"]').should('contain', 'Email')
         // cy.get('@usingTheGrid').find('[for="inputPassword2"]').should('contain', 'Password')
@@ -95,6 +95,12 @@ describe('locator syntax rules', () => {
         //         cy.wrap(usingTheGridForm).find('[for="inputEmail1"]').should('contain', 'Email')
         //         cy.wrap(usingTheGridForm).find('[for="inputPassword2"]').should('contain', 'Password')
         //     })
+    })
+
+    it.only('parent elements', () => {
+        cy.get('#inputEmail1').parents('form').find('button')
+        cy.contains('Using the Grid').parent().find('button')
+        cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button')
     })
 
     // it('extract text values (invoke command)', () => {

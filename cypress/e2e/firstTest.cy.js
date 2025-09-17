@@ -53,15 +53,6 @@ describe('locator syntax rules', () => {
         cy.contains('nb-card', 'Horizontal form').contains('Sign in')
         cy.contains('nb-card', 'Horizontal form').find('[type="email"]')// --> find input on the 2nd form for email
         // cy.contains('nb-card', 'Horizontal form').get('button') // --> don't use '.get'
-
-        //cypress chains & DOM
-        cy.get('#inputEmail3')
-            .parents('form')
-            .find('button')
-            .should('contain', 'Sign in')
-            .parents('form')
-            .find('nb-checkbox')
-            .click()   // --> if finish with action method (as click or type), next in new chain start with cy
     })
 
     // it('alias & then & wrap methods', () => {
@@ -97,10 +88,22 @@ describe('locator syntax rules', () => {
         //     })
     })
 
-    it.only('parent elements', () => {
+    it('parent elements', () => {
         cy.get('#inputEmail1').parents('form').find('button')
         cy.contains('Using the Grid').parent().find('button')
         cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button')
+    })
+
+    it.only('cypress chains', () => { // --> cypress chains & DOM
+        cy.get('#inputEmail1')
+            .parents('form')
+            .find('button')
+            .click()
+        cy.get('#inputEmail1') .parents('form')
+            .find('nb-radio')
+            .first()
+            .should('have.text', 'Option 1') // --> if finish with action method (as click or type), 
+            //                               // next in new chain start with 'cy.get'
     })
 
     // it('extract text values (invoke command)', () => {

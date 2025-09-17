@@ -2,12 +2,14 @@
 
 const { property } = require("lodash")
 
-describe('first test suite', () => {
-    it('first test', () => {
-        cy.visit('/')
-        cy.contains('Forms').click()
-        cy.contains('Form Layouts').click()
+beforeEach('Open test application', () => {
+    cy.visit('/')
+    cy.contains('Forms').click()
+    cy.contains('Form Layouts').click()
+})
 
+describe('locator syntax rules', () => {
+    it('first test', () => {
         // by Tag Name
         cy.get('input')
 
@@ -39,68 +41,63 @@ describe('first test suite', () => {
         cy.get('[data-cy="inputEmail1"]')                   // data-cy --> Most Recommended
     })
 
-    // it('second test', () => {
-    //     cy.visit('/')
-    //     cy.contains('Forms').click()
-    //     cy.contains('Form Layouts').click()
+    it('locators methods', () => {
+        // Theory --> 3 locators methods
+        // get() - find elements on the page by locator globally
+        // find() - find child elements by locator
+        // contains() - find web element by text (HTML text & by text & locator)
+        cy.contains('Sign in')                   // ---> cy. are looking for the first much of "Sign in"
+        cy.contains('[status="warning"]', 'Sign in')       // --> to find 2nd locator of "Sign in"
+        cy.contains('nb-card', 'Horizontal form')  // --> 2nd locator of "Sign in"
+        cy.contains('nb-card', 'Horizontal form').find('button')  // --> find 2nd locator of "Sign in"
+        cy.contains('nb-card', 'Horizontal form').contains('Sign in')
+        cy.contains('nb-card', 'Horizontal form').find('[type="email"]')// --> find input on the 2nd form for email
+        // cy.contains('nb-card', 'Horizontal form').get('button') // --> don't use '.get'
 
-    //     // Theory
-    //     // get() - find elements on the page by locator globally
-    //     // find() - find child elements by locator
-    //     // contains() - find HTML text & by text & locator
-    //     cy.contains('Sign in')                   // ---> cy. are looking for the first much of "Sign in"
-    //     cy.contains('[status="warning"]', 'Sign in')       //--> to find 2nd locator of "Sign in"
-    //     cy.contains('nb-card', 'Horizontal form').find('button')  //-->find 2nd locator of "Sign in"
-    //     cy.contains('nb-card', 'Horizontal form').contains('Sign in')
-    //     cy.contains('nb-card', 'Horizontal form').find('[type="email"]')//-->find input on the 2nd form for email
-    //     cy.contains('nb-card', 'Horizontal form').get('button')
+        //cypress chains & DOM
+        cy.get('#inputEmail3')
+            .parents('form')
+            .find('button')
+            .should('contain', 'Sign in')
+            .parents('form')
+            .find('nb-checkbox')
+            .click()   // --> if finish with action method (as click or type), next in new chain start with cy
+    })
 
-    //     //cypress chains & DOM
-    //     cy.get('#inputEmail3')
-    //         .parents('form')
-    //         .find('button')
-    //         .should('contain', 'Sign in')
-    //         .parents('form')
-    //         .find('nb-checkbox')
-    //         .click()   //--> if finish with action method (as click or type), next in new chain start with cy. 
-    // })
+    // it('alias & then & wrap methods', () => {
+    it.only('child elements', () => {           //  save subject of the command
+        cy.contains('nb-card', 'Using the Grid').find('.row').find('button')
+        // cy.contains('nb-card', 'Using the Grid').find('[for="inputEmail1"]').should('contain', 'Email') 
+        // cy.contains('nb-card', 'Using the Grid').find('[for="inputPassword2"]').should('contain', 'Password')
+        // cy.contains('nb-card', 'Basic form').find('[for="exampleInputEmail1"]').should('contain', 'Email address')
+        // cy.contains('nb-card', 'Basic form').find('[for="exampleInputPassword1"]').should('contain', 'Password')
+        cy.get('nb-card').find('nb-radio-group').contains('Option 1')
+        cy.get('nb-card nb-radio-group').contains('Option 1')               // to find child element 
+        cy.get('nb-card > nb-card-body')               // to find 6 child elements 
+        cy.get('nb-card > nb-card-body [placeholder="Email"]')               // to find 5 child elements 
+        cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]')             // 1 element
 
-    // // it.only('alias & then & wrap methods', () => {
-    // it('save subject of the command', () => {
-    //     cy.visit('/')
-    //     cy.contains('Forms').click()
-    //     cy.contains('Form Layouts').click()
+        //--->                                 //---> CAN'T DO THINGS LIKE THIS below
+        // const firstForm = cy.contains('nb-card', 'Using the Grid')
+        // // const secondForm = cy.contains('nb-card', 'Basic form')
+        // firstForm.find('[for="inputEmail1"]').should('contain', 'Email')
+        // firstForm.find('[for="inputPassword2"]').should('contain', 'Password')
+        // secondForm.find('[for="exampleInputEmail1"]').should('contain', 'Email address')
+        // secondForm.find('[for="exampleInputPassword1"]').should('contain', 'Password')
 
-    //     // cy.contains('nb-card', 'Using the Grid').find('[for="inputEmail1"]').should('contain', 'Email')
-    //     // cy.contains('nb-card', 'Using the Grid').find('[for="inputPassword2"]').should('contain', 'Password')
-    //     // // cy.contains('nb-card', 'Basic form').find('[for="exampleInputEmail1"]').should('contain', 'Email address')
-    //     // // cy.contains('nb-card', 'Basic form').find('[for="exampleInputPassword1"]').should('contain', 'Password')
+        // // ---> 1st. cypress alias style --> correct one (use @ for alias)
+        // cy.contains('nb-card', 'Using the Grid').as('usingTheGrid')
+        // cy.get('@usingTheGrid').find('[for="inputEmail1"]').should('contain', 'Email')
+        // cy.get('@usingTheGrid').find('[for="inputPassword2"]').should('contain', 'Password')
 
-    //     //--->                                 //---> CAN'T DO THINGS LIKE THIS below
-    //     // const firstForm = cy.contains('nb-card', 'Using the Grid')
-    //     // // const secondForm = cy.contains('nb-card', 'Basic form')
-    //     // firstForm.find('[for="inputEmail1"]').should('contain', 'Email')
-    //     // firstForm.find('[for="inputPassword2"]').should('contain', 'Password')
-    //     // secondForm.find('[for="exampleInputEmail1"]').should('contain', 'Email address')
-    //     // secondForm.find('[for="exampleInputPassword1"]').should('contain', 'Password')
-
-    //     // // ---> 1st. cypress alias style --> correct one (use @ for alias)
-    //     // cy.contains('nb-card', 'Using the Grid').as('usingTheGrid')
-    //     // cy.get('@usingTheGrid').find('[for="inputEmail1"]').should('contain', 'Email')
-    //     // cy.get('@usingTheGrid').find('[for="inputPassword2"]').should('contain', 'Password')
-
-    //     // // ---> 2nd. cypress then() method --> correct two (use wrap method)
-    //     cy.contains('nb-card', 'Using the Grid').then(usingTheGridForm => {
-    //         cy.wrap(usingTheGridForm).find('[for="inputEmail1"]').should('contain', 'Email')
-    //         cy.wrap(usingTheGridForm).find('[for="inputPassword2"]').should('contain', 'Password')
-    //     })
-    // })
+        // ---> 2nd. cypress then() method --> correct two (use wrap method)
+        //     cy.contains('nb-card', 'Using the Grid').then(usingTheGridForm => {
+        //         cy.wrap(usingTheGridForm).find('[for="inputEmail1"]').should('contain', 'Email')
+        //         cy.wrap(usingTheGridForm).find('[for="inputPassword2"]').should('contain', 'Password')
+        //     })
+    })
 
     // it('extract text values (invoke command)', () => {
-    //     cy.visit('/')
-    //     cy.contains('Forms').click()
-    //     cy.contains('Form Layouts').click()
-
     //     // example 1 (regular assertion with 'should')
     //     cy.get('[for="exampleInputEmail1"]').should('contain', 'Email address')
     //     // cy.get('[for="exampleInputEmail1"]')
@@ -141,10 +138,6 @@ describe('first test suite', () => {
     // })
 
     // it('checkboxes & radio buttons (assert property)', () => { //only for type radio or checkbox (check & uncheck methods) 
-    //     cy.visit('/')
-    //     cy.contains('Forms').click()
-    //     cy.contains('Form Layouts').click()
-
     //     cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then(radioButtons => {
     //         cy.wrap(radioButtons).eq(0).check({ force: true })
     //             .should('be.checked')                   //for radio button visually hidden use 'force: true'

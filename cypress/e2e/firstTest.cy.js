@@ -67,25 +67,6 @@ describe('locator syntax rules', () => {
         cy.get('nb-card > nb-card-body')               // to find 6 child elements 
         cy.get('nb-card > nb-card-body [placeholder="Email"]')               // to find 5 child elements 
         cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]')             // 1 element
-
-        // --->                                 //---> CAN'T DO THINGS LIKE THIS below
-        // const firstForm = cy.contains('nb-card', 'Using the Grid')
-        // const secondForm = cy.contains('nb-card', 'Basic form')
-        // firstForm.find('[for="inputEmail1"]').should('contain', 'Email')
-        // firstForm.find('[for="inputPassword2"]').should('contain', 'Password')
-        // secondForm.find('[for="exampleInputEmail1"]').should('contain', 'Email address')
-        // secondForm.find('[for="exampleInputPassword1"]').should('contain', 'Password')
-
-        // ---> 1st. cypress alias style --> correct one (use @ for alias)
-        // cy.contains('nb-card', 'Using the Grid').as('usingTheGrid')
-        // cy.get('@usingTheGrid').find('[for="inputEmail1"]').should('contain', 'Email')
-        // cy.get('@usingTheGrid').find('[for="inputPassword2"]').should('contain', 'Password')
-
-        // ---> 2nd. cypress then() method --> correct two (use wrap method)
-        //     cy.contains('nb-card', 'Using the Grid').then(usingTheGridForm => {
-        //         cy.wrap(usingTheGridForm).find('[for="inputEmail1"]').should('contain', 'Email')
-        //         cy.wrap(usingTheGridForm).find('[for="inputPassword2"]').should('contain', 'Password')
-        //     })
     })
 
     it('parent elements', () => {
@@ -94,26 +75,62 @@ describe('locator syntax rules', () => {
         cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button')
     })
 
-    it.only('cypress chains', () => { // --> cypress chains & DOM
+    it('cypress chains', () => { // --> cypress chains & DOM
         cy.get('#inputEmail1')
             .parents('form')
             .find('button')
             .click()
-        cy.get('#inputEmail1') .parents('form')
+
+        cy.get('#inputEmail1').parents('form')
             .find('nb-radio')
             .first()
             .should('have.text', 'Option 1') // --> if finish with action method (as click or type), 
-            //                               // next in new chain start with 'cy.get'
+        //                               // next in new chain start with 'cy.get'
+    })
+
+    it.only('reusing locators', () => {
+        // --->                                 // ---> CAN'T DO THINGS LIKE THIS below, Will not work
+        // const inputEmail1 = cy.get('#inputEmail1')
+        // inputEmail1.parents('form').find('button')
+        // inputEmail1.parents('form').find('nb-radio')
+
+        // const firstForm = cy.contains('nb-card', 'Using the Grid')
+        // const secondForm = cy.contains('nb-card', 'Basic form')
+        // firstForm.find('[for="inputEmail1"]').should('contain', 'Email')
+        // firstForm.find('[for="inputPassword2"]').should('contain', 'Password')
+        // secondForm.find('[for="exampleInputEmail1"]').should('contain', 'Email address')
+        // secondForm.find('[for="exampleInputPassword1"]').should('contain', 'Password')
+
+        // ---> 1st. cypress alias style --> correct one (use @ for alias)
+        cy.get('#inputEmail1').as('inputEmail1')
+        cy.get('@inputEmail1').parents('form').find('button')
+        cy.get('@inputEmail1').parents('form').find('nb-radio')
+        // cy.contains('nb-card', 'Using the Grid').as('usingTheGrid')
+        // cy.get('@usingTheGrid').find('[for="inputEmail1"]').should('contain', 'Email')
+        // cy.get('@usingTheGrid').find('[for="inputPassword2"]').should('contain', 'Password')
+
+        // ---> 2nd. cypress then() method --> correct two (use wrap method)
+        cy.get('#inputEmail1').then(inputEmail => {
+            cy.wrap(inputEmail).parents('form').find('button')
+            cy.wrap(inputEmail).parents('form').find('nb-radio')
+            cy.wrap(inputEmail).as('inputEmail2')
+        })
+        cy.get('@inputEmail2').click()
+
+        // cy.contains('nb-card', 'Using the Grid').then(usingTheGridForm => {
+        //     cy.wrap(usingTheGridForm).find('[for="inputEmail1"]').should('contain', 'Email')
+        //     cy.wrap(usingTheGridForm).find('[for="inputPassword2"]').should('contain', 'Password')
+        // })
     })
 
     // it('extract text values (invoke command)', () => {
-    //     // example 1 (regular assertion with 'should')
+    //     // example 1 --> (regular assertion with 'should')
     //     cy.get('[for="exampleInputEmail1"]').should('contain', 'Email address')
-    //     // cy.get('[for="exampleInputEmail1"]')
-    //     //     .should('contain', 'Email address')
+    //     cy.get('[for="exampleInputEmail1"]')
+    //         .should('contain', 'Email address')
 
-    //     //     // .should('have.class', 'label')                  // example for assertions 1 for #20
-    //     //     // .should('have.text', 'Email address')           // example for assertions 2 for #20
+    //         // .should('have.class', 'label')                  // example for assertions 1 for #20
+    //         // .should('have.text', 'Email address')           // example for assertions 2 for #20
 
     //     // example 2 ---> using then() (jquery method !!!)
     //     cy.get('[for="exampleInputEmail1"]').then(label => {   // label will represent object value
@@ -121,8 +138,8 @@ describe('locator syntax rules', () => {
     //         expect(labelText).to.equal('Email address')         // assertion expect in jQuery type syntax
     //         cy.wrap(labelText).should('contain', 'Email address') //--->or use 'cy.wrap' regular assertion
 
-    //         //     // expect(labeText).to.have.class('label')            // example for assertions 3 for #20
-    //         //     // expect(labelText).to.have.text('Email address')     // example for assertions 4 for #20
+    //         expect(labeText).to.have.class('label')            // example for assertions 3 for #20
+    //         expect(labelText).to.have.text('Email address')     // example for assertions 4 for #20
     //     })
 
     //     // example 3 ---> cypress method (invoke !!!)

@@ -124,14 +124,7 @@ describe('locator syntax rules', () => {
         // })
     })
 
-    it.only('extracting values (text or property values (invoke command))', () => {
-        // example 0 --> (regular assertion with 'should')
-        cy.get('[for="exampleInputEmail1"]').should('contain', 'Email address')
-        cy.get('[for="exampleInputEmail1"]')
-            .should('contain', 'Email address')
-        //     .should('have.class', 'label')                  // example for assertions 1 for #20 --> ???
-        //     .should('have.text', 'Email address')           // example for assertions 2 for #20 --> ???
-
+    it('extracting values (text or property values (invoke command))', () => {
         //example 1 ---> using then() (jquery method !!!)
         cy.get('[for="exampleInputEmail1"]').then(label => {    // label will represent object value
             const emailLabel = label.text()                          // assign jQuery method to the constant
@@ -139,8 +132,8 @@ describe('locator syntax rules', () => {
             expect(emailLabel).to.equal('Email address')         // assertion expect in jQuery type syntax
             cy.wrap(emailLabel).should('contain', 'Email address') // --> or use 'cy.wrap' regular assertion
 
-            // expect(label).to.have.class('label')            // example for assertions 3 for #20 --> ???
-            // expect(label).to.have.text('Email address')     // example for assertions 4 for #20 --> ???
+            expect(label).to.have.class('label')            // example for assertions 3 for #20 --> ???
+            expect(label).to.have.text('Email address')     // example for assertions 4 for #20 --> ???
         })
 
         // example 2 ---> cypress method (invoke !!!)
@@ -163,7 +156,7 @@ describe('locator syntax rules', () => {
             //     console.log(classValue)      
         })
 
-        // // example --> 4 invoke property with hidden properties (attribute value) 
+        // example --> 4 invoke property with hidden properties (attribute value) 
         cy.get('#exampleInputEmail1').type('hello@test.com')
         cy.get('#exampleInputEmail1').invoke('prop', 'value').then(value => {
                  console.log(value)
@@ -178,6 +171,22 @@ describe('locator syntax rules', () => {
             })
     })
 
+    it.only('assertions', () => {
+        // regular assertion with 'should'
+        cy.get('[for="exampleInputEmail1"]').should('have.class', 'label')                  
+        cy.get('[for="exampleInputEmail1"]').should('have.text', 'Email address')           
+        cy.get('[for="exampleInputEmail1"]').should('contain', 'Email address')
+
+        cy.get('[for="exampleInputEmail1"]').then(label => {
+            expect(label).to.have.text('Email address')
+            expect(label).to.contain('Email address')
+        })
+
+        cy.get('[for="exampleInputEmail1"]').invoke('text').then(emailLabel => {
+            expect(emailLabel).to.equal('Email address')
+            cy.wrap(emailLabel).should('equal', 'Email address')
+        })
+    })
     // it('checkboxes & radio buttons (assert property)', () => { //only for type radio or checkbox (check & uncheck methods) 
     //     cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then(radioButtons => {
     //         cy.wrap(radioButtons).eq(0).check({ force: true })

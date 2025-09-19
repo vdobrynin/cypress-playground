@@ -59,7 +59,7 @@ it('checkboxes', () => {
     cy.get('[type="checkbox"]').eq(2).uncheck({ force: true }) // uncheck another one
 })
 
-it.only('lists and dropdowns', () => {
+it('lists and dropdowns', () => {
     cy.contains('Modal & Overlays').click()
     cy.contains('Toastr').click()
 
@@ -90,12 +90,12 @@ it.only('lists and dropdowns', () => {
     //     cy.wrap(dropdown).click()
     //     cy.get('.options-list nb-option').each((listItem, index) => { // looping through 4 elements w/index
     //         const itemText = listItem.text().trim()
-    //         const colors = {
-    //             "Light": "rgb(255, 255, 255)",
-    //             "Dark": "rgb(34, 43, 69)",
-    //             "Cosmic": "rgb(50, 50, 89)",
-    //             "Corporate": "rgb(255, 255, 255)"
-    //         }
+    //         // const colors = {
+    //         //     "Light": "rgb(255, 255, 255)",
+    //         //     "Dark": "rgb(34, 43, 69)",
+    //         //     "Cosmic": "rgb(50, 50, 89)",
+    //         //     "Corporate": "rgb(255, 255, 255)"
+    //         // }
     //         cy.wrap(listItem).click()
     //         cy.wrap(dropdown).should('contain', itemText)
     //         // cy.get('nb-layout-header nav').should('have.css', 'background-color', colors[itemText])
@@ -104,4 +104,15 @@ it.only('lists and dropdowns', () => {
     //         }
     //     })
     // })
+})
+
+it.only('tooltips', () => {
+    cy.contains('Modal & Overlays').click()
+    cy.contains('Tooltip').click()
+
+    cy.contains('button', 'Top').trigger('mouseenter')
+    cy.get('nb-tooltip').should('have.text', 'This is a tooltip')
+    
+    cy.contains('button', 'Success').trigger('mouseenter')
+    cy.get('nb-tooltip').should('have.text', 'This is a tooltip')
 })

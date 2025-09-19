@@ -9,4 +9,5 @@ module.exports = defineConfig({
   },
   viewportWidth: 2065,
   viewportHeight: 1329,
+  // defaultCommandTimeout: 11000 // for every test which not recommend
 });

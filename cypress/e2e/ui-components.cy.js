@@ -4,7 +4,7 @@ beforeEach('Open application', () => {
     cy.visit('/')
 })
 
-it.only('input fields', () => {
+it('input fields', () => {
     cy.contains('Forms').click()
     cy.contains('Form Layouts').click()
 
@@ -25,4 +25,20 @@ it.only('input fields', () => {
 
     cy.get('#input-email').type('test@bondaracademy.com')
     cy.get('#input-password').type('Welcome{enter}')
+})
+
+    it.only('radio buttons', () => {
+        cy.contains('Forms').click()
+        cy.contains('Form Layouts').click()
+
+        cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then(allRadioButtons => {
+            // cy.wrap(allRadioButtons).eq(0).check().should('be.checked') // --> don't work
+            cy.wrap(allRadioButtons).eq(0).check({ force: true }).should('be.checked')
+            cy.wrap(allRadioButtons).eq(1).check({ force: true })
+            cy.wrap(allRadioButtons).eq(0).should('not.be.checked')
+            cy.wrap(allRadioButtons).eq(2).should('be.disabled')
+        })
+        cy.contains('nb-card', 'Using the Grid').contains('Option 1').click() // or .check({ force: true })
+        cy.contains('nb-card', 'Using the Grid').contains('label', 'Option 2')
+            .find('input').check({ force: true })
 })

@@ -133,7 +133,7 @@ it.only('dialog boxes', () => {
     //     expect(confirm).to.equal('Are you sure you want to delete?')
     // })
 
-    // // example 2. --> BEST !
+    // // example 2. --> BEST ! to create stub
     cy.window().then(win => {
         // cy.stub(win, 'confirm').as('dialogBox').returns(true) // to except the dialog message to delete "OK"
         cy.stub(win, 'confirm').as('dialogBox').returns(false) // to NOT except the dialog message "Cancel"

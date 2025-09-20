@@ -112,7 +112,7 @@ it('tooltips', () => {
 
     cy.contains('button', 'Top').trigger('mouseenter')
     cy.get('nb-tooltip').should('have.text', 'This is a tooltip')
-    
+
     cy.contains('button', 'Success').trigger('mouseenter')
     cy.get('nb-tooltip').should('have.text', 'This is a tooltip')
 })
@@ -142,7 +142,7 @@ it('dialog boxes', () => {
     cy.get('@dialogBox').should('be.calledWith', 'Are you sure you want to delete?')
 })
 
-it.only('web tables', () => {
+it('web tables', () => {
     cy.contains('Tables & Data').click()
     cy.contains('Smart Table').click()
 
@@ -182,5 +182,45 @@ it.only('web tables', () => {
                 // cy.wrap(tableRows).find('td').last().should('have.text', 20)
             }
         })
+    })
+})
+
+it.only('datepickers', () => {
+    cy.contains('Forms').click()
+    cy.contains('Datepicker').click()
+
+    // function selectDateFromCurrentDay(day) {
+    let date = new Date()
+    date.setDate((date.getDate() + 5))  // --> this is hardcoded day
+    let futureDay = date.getDate()                                             // change date to the day
+    let dateToAssert = `Sep ${futureDay}, 2025`                              // change date to the day
+        // date.setDate(date.getDate() + day)
+        // console.log(date)                    // --> to find date in DevTools   
+    //     let futureMonthLong = date.toLocaleDateString('en-US', { month: 'long' })
+    //     let futureMonthShort = date.toLocaleDateString('en-US', { month: 'short' })
+    //     let futureYear = date.getFullYear()
+        
+    //     let dateToAssert = `${futureMonthShort} ${futureDay}, ${futureYear}` // re-write to be dynamic
+
+    //     cy.get('nb-calendar-view-mode').invoke('text').then(calendarMonthAndYear => {
+    //         if (!calendarMonthAndYear.includes(futureMonthLong) || !calendarMonthAndYear.includes(futureYear)) {
+    //             cy.get('[data-name="chevron-right"]').click()
+    //             selectDateFromCurrentDay(day)
+    //         } else {
+    //             cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
+    //         }
+    //     })
+    //     return dateToAssert
+    // }
+
+    cy.get('[placeholder="Form Picker"]').then(input => {  
+        // cy.contains('nb-card', 'Common Datepicker').find('input').then(input => { // old version
+        cy.wrap(input).click()
+        cy.get('.day-cell').not('.bounding-month').contains(25).click()   //--> this was hardcoded day
+        cy.wrap(input).should('have.value', dateToAssert)                       // assertion v.1 dynamic
+        cy.wrap(input).invoke('prop', 'value').should('contain', dateToAssert)  // assertion v.2 variation  
+        // cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()        
+        // const dateToAssert = selectDateFromCurrentDay(12) // --> calling function above to choose thy we want                
+        // cy.wrap(input).should('have.value', 'Sep 25, 2025')                           
     })
 })

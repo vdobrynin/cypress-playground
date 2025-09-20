@@ -106,7 +106,7 @@ it('lists and dropdowns', () => {
     // })
 })
 
-it.only('tooltips', () => {
+it('tooltips', () => {
     cy.contains('Modal & Overlays').click()
     cy.contains('Tooltip').click()
 
@@ -116,3 +116,32 @@ it.only('tooltips', () => {
     cy.contains('button', 'Success').trigger('mouseenter')
     cy.get('nb-tooltip').should('have.text', 'This is a tooltip')
 })
+
+it.only('dialog boxes', () => {
+    cy.contains('Tables & Data').click()
+    cy.contains('Smart Table').click()
+
+    // // example 0 --> not preferable code cause code will never be executed !!!
+    // cy.get('tbody tr').first().find('.nb-trash').click()
+    // cy.on('window:confirm', (confirm) => {
+    //     expect(confirm).to.equal('Are you sure you want to delete?')
+    // })
+
+    // // example 1. --> not preferable code 
+    // cy.get('.nb-trash').first().click()
+    // cy.on('window:confirm', confirm => {
+    //     expect(confirm).to.equal('Are you sure you want to delete?')
+    // })
+
+    // // example 2. --> BEST !
+    cy.window().then(win => {
+        // cy.stub(win, 'confirm').as('dialogBox').returns(true) // to except the dialog message to delete "OK"
+        cy.stub(win, 'confirm').as('dialogBox').returns(false) // to NOT except the dialog message "Cancel"
+    })
+    cy.get('.nb-trash').first().click()
+    cy.get('@dialogBox').should('be.calledWith', 'Are you sure you want to delete?')
+})
+
+// it.only('web tables', () => {
+
+// })

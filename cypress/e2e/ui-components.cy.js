@@ -228,11 +228,20 @@ it('datepickers', () => {
     })
 })
 
-it.only('sliders', () => {
+it('sliders', () => {
     cy.get('[tabtitle="Temperature"] circle')
         .invoke('attr', 'cx', '38.66')
         .invoke('attr', 'cy', '57.75')
         .click()
     cy.get('[class="value temperature h1"]').should('contain.text', '18')
+
+})
+
+it.only('drag and drop', () => {
+    cy.contains('Extra Components').click()
+    cy.contains('Drag & Drop').click()
+
+    cy.get('#todo-list div').first().trigger('dragstart')
+    cy.get('#drop-list').trigger('drop')
 
 })

@@ -185,7 +185,7 @@ it('web tables', () => {
     })
 })
 
-it.only('datepickers', () => {
+it('datepickers', () => {
     cy.contains('Forms').click()
     cy.contains('Datepicker').click()
 
@@ -226,4 +226,13 @@ it.only('datepickers', () => {
                        
         // cy.wrap(input).should('have.value', 'Sep 25, 2025')                           
     })
+})
+
+it.only('sliders', () => {
+    cy.get('[tabtitle="Temperature"] circle')
+        .invoke('attr', 'cx', '38.66')
+        .invoke('attr', 'cy', '57.75')
+        .click()
+    cy.get('[class="value temperature h1"]').should('contain.text', '18')
+
 })

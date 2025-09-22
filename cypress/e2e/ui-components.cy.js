@@ -237,11 +237,29 @@ it('sliders', () => {
 
 })
 
-it.only('drag and drop', () => {
+it('drag and drop', () => {
     cy.contains('Extra Components').click()
     cy.contains('Drag & Drop').click()
 
     cy.get('#todo-list div').first().trigger('dragstart')
     cy.get('#drop-list').trigger('drop')
 
+})
+
+it.only('iframes', () => {
+    cy.contains('Modal & Overlays').click()
+    cy.contains('Dialog').click()
+    cy.frameLoaded('[data-cy="esc-close-iframe"]')
+
+    // 1st option
+    cy.iframe('[data-cy="esc-close-iframe"]').contains('Open Dialog with esc close').click()
+    cy.contains('Dismiss Dialog').click()
+
+    // 2nd option
+    cy.enter('[data-cy="esc-close-iframe"]').then(getBody => {
+        getBody().contains('Open Dialog with esc close').click()
+        cy.contains('Dismiss Dialog').click()
+        getBody().contains('Open Dialog without esc close').click()
+        cy.contains('OK').click()
+    })
 })

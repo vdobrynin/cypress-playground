@@ -24,7 +24,7 @@ class NavigationPage {
         cy.contains('Form Layouts').click()
     }
 
-    datePickerPage() {
+    datepickerPage() {
         // cy.contains('Forms').click()
         selectGroupMenuItem('Forms')
         cy.contains('Datepicker').click()

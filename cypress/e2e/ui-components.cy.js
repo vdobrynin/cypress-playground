@@ -223,7 +223,7 @@ it('datepickers', () => {
 
         // cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
         // cy.get('.day-cell').not('.bounding-month').contains(25).click()   //--> this was hardcoded day
-                       
+
         // cy.wrap(input).should('have.value', 'Sep 25, 2025')                           
     })
 })

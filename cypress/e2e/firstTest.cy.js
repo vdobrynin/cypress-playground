@@ -159,7 +159,7 @@ describe('locator syntax rules', () => {
         // example --> 4 invoke property with hidden properties (attribute value) 
         cy.get('#exampleInputEmail1').type('hello@test.com')
         cy.get('#exampleInputEmail1').invoke('prop', 'value').then(value => {
-                 console.log(value)
+            console.log(value)
         })
         cy.get('#exampleInputEmail1').invoke('prop', 'value')
             .should('contain', 'hello@test.com') //invoke property or value
@@ -173,8 +173,8 @@ describe('locator syntax rules', () => {
 
     it('assertions', () => {
         // regular assertion with 'should'
-        cy.get('[for="exampleInputEmail1"]').should('have.class', 'label')                  
-        cy.get('[for="exampleInputEmail1"]').should('have.text', 'Email address')           
+        cy.get('[for="exampleInputEmail1"]').should('have.class', 'label')
+        cy.get('[for="exampleInputEmail1"]').should('have.text', 'Email address')
         cy.get('[for="exampleInputEmail1"]').should('contain', 'Email address')
 
         cy.get('[for="exampleInputEmail1"]').then(label => {
@@ -195,7 +195,7 @@ describe('locator syntax rules', () => {
         cy.contains('Open with delay 10 seconds').click()
         cy.get('nb-dialog-container nb-card-header', { timeout: 11000 })
             .should('have.text', 'Friendly reminder')
-    
+
         // cy.get('nb-dialog-container nb-card-footer').should('contain.text', 'OK')
         cy.contains('OK').click()
     })

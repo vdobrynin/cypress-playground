@@ -30,7 +30,7 @@ describe('locator syntax rules', () => {
 
         // by 2 (Two) Attributes
         cy.get('[placeholder="Email"][fullwidth]')       // 2 attributes without space between
-        
+
         // by Tag Name with Attribute value
         cy.get('input[placeholder="Email"]')                // tag + attribute w/value
 
@@ -76,28 +76,28 @@ describe('locator syntax rules', () => {
         cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button') // parentsUntil
     })
 
-    it.only('cypress chains', () => {       // --> cypress chains & DOM
+    it('cypress chains', () => {       // --> cypress chains & DOM
         cy.get('#inputEmail1')
             .parents('form')
             .find('button')
             .click()
-            // .parents('form')         // not recommend chains methods after the click
-            // .find('nb-radio')
-            // .first()
-            // .should('have.text', 'Option 1')
+        // .parents('form')         // not recommend chains methods after the click
+        // .find('nb-radio')
+        // .first()
+        // .should('have.text', 'Option 1')
 
         cy.get('#inputEmail1').parents('form')
             .find('nb-radio')
             .first()
             .should('have.text', 'Option 1') // --> if finish with action method (as click or type), 
-                                      // next in new chain start with 'cy.get'
+        // next in new chain start with 'cy.get'
     })
 
-    it('reusing locators', () => {
+    it.only('reusing locators', () => {
         // --->                                 // ---> CAN'T DO THINGS LIKE THIS below, Will not work
-        // const inputEmail1 = cy.get('#inputEmail1')
-        // inputEmail1.parents('form').find('button')
-        // inputEmail1.parents('form').find('nb-radio')
+        // // const inputEmail1 = cy.get('#inputEmail1')
+        // // inputEmail1.parents('form').find('button')
+        // // inputEmail1.parents('form').find('nb-radio')
 
         // const firstForm = cy.contains('nb-card', 'Using the Grid')
         // const secondForm = cy.contains('nb-card', 'Basic form')

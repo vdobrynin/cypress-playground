@@ -69,24 +69,28 @@ describe('locator syntax rules', () => {
         cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]')  // 1 element only
     })
 
-    it.only('parent elements', () => {
+    it('parent elements', () => {
         cy.get('#inputEmail1').parents('form').find('button') // parents element
         cy.contains('Using the Grid').parent().find('button')    // parent method
         // cy.get('#inputEmail1').parentsUntil('form').find('button') // will not find  before the 'form'
         cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button') // parentsUntil
     })
 
-    it('cypress chains', () => { // --> cypress chains & DOM
+    it.only('cypress chains', () => {       // --> cypress chains & DOM
         cy.get('#inputEmail1')
             .parents('form')
             .find('button')
             .click()
+            // .parents('form')         // not recommend chains methods after the click
+            // .find('nb-radio')
+            // .first()
+            // .should('have.text', 'Option 1')
 
         cy.get('#inputEmail1').parents('form')
             .find('nb-radio')
             .first()
             .should('have.text', 'Option 1') // --> if finish with action method (as click or type), 
-        //                               // next in new chain start with 'cy.get'
+                                      // next in new chain start with 'cy.get'
     })
 
     it('reusing locators', () => {

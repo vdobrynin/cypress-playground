@@ -56,7 +56,7 @@ describe('locator syntax rules', () => {
     })
 
     // it('alias & then & wrap methods', () => {
-    it.only('child elements', () => {           //  save subject of the command
+    it('child elements', () => {           //  save subject of the command
         cy.contains('nb-card', 'Using the Grid').find('.row').find('button') // find by the class value .row
         // cy.contains('nb-card', 'Using the Grid').find('[for="inputEmail1"]').should('contain', 'Email') 
         // cy.contains('nb-card', 'Using the Grid').find('[for="inputPassword2"]').should('contain', 'Password')
@@ -66,13 +66,14 @@ describe('locator syntax rules', () => {
         cy.get('nb-card nb-radio-group').contains('Option 1')  //recommended --> combine 2 locators to find 
         cy.get('nb-card > nb-card-body')               // to find 6th child elements (6 body find)
         cy.get('nb-card > nb-card-body [placeholder="Email"]')     // to find 5 child elements 
-        cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]')  // 1 element
+        cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]')  // 1 element only
     })
 
-    it('parent elements', () => {
-        cy.get('#inputEmail1').parents('form').find('button')
-        cy.contains('Using the Grid').parent().find('button')
-        cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button')
+    it.only('parent elements', () => {
+        cy.get('#inputEmail1').parents('form').find('button') // parents element
+        cy.contains('Using the Grid').parent().find('button')    // parent method
+        // cy.get('#inputEmail1').parentsUntil('form').find('button') // will not find  before the 'form'
+        cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button') // parentsUntil
     })
 
     it('cypress chains', () => { // --> cypress chains & DOM

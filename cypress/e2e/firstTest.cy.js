@@ -41,7 +41,7 @@ describe('locator syntax rules', () => {
         cy.get('[data-cy="inputEmail1"]')                   // data-cy --> Most Recommended
     })
 
-    it.only('locators methods', () => {
+    it('locators methods', () => {
         // Theory --> 3 locators methods
         // get() - find elements on the page by locator globally
         // find() - find child elements by locator
@@ -56,17 +56,17 @@ describe('locator syntax rules', () => {
     })
 
     // it('alias & then & wrap methods', () => {
-    it('child elements', () => {           //  save subject of the command
-        cy.contains('nb-card', 'Using the Grid').find('.row').find('button')
+    it.only('child elements', () => {           //  save subject of the command
+        cy.contains('nb-card', 'Using the Grid').find('.row').find('button') // find by the class value .row
         // cy.contains('nb-card', 'Using the Grid').find('[for="inputEmail1"]').should('contain', 'Email') 
         // cy.contains('nb-card', 'Using the Grid').find('[for="inputPassword2"]').should('contain', 'Password')
         // cy.contains('nb-card', 'Basic form').find('[for="exampleInputEmail1"]').should('contain', 'Email address')
         // cy.contains('nb-card', 'Basic form').find('[for="exampleInputPassword1"]').should('contain', 'Password')
         cy.get('nb-card').find('nb-radio-group').contains('Option 1')
-        cy.get('nb-card nb-radio-group').contains('Option 1')               // to find child element 
-        cy.get('nb-card > nb-card-body')               // to find 6 child elements 
-        cy.get('nb-card > nb-card-body [placeholder="Email"]')               // to find 5 child elements 
-        cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]')             // 1 element
+        cy.get('nb-card nb-radio-group').contains('Option 1')  //recommended --> combine 2 locators to find 
+        cy.get('nb-card > nb-card-body')               // to find 6th child elements (6 body find)
+        cy.get('nb-card > nb-card-body [placeholder="Email"]')     // to find 5 child elements 
+        cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]')  // 1 element
     })
 
     it('parent elements', () => {

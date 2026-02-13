@@ -30,7 +30,7 @@ describe('locator syntax rules', () => {
 
         // by 2 (Two) Attributes
         cy.get('[placeholder="Email"][fullwidth]')       // 2 attributes without space between
-
+        
         // by Tag Name with Attribute value
         cy.get('input[placeholder="Email"]')                // tag + attribute w/value
 
@@ -41,18 +41,18 @@ describe('locator syntax rules', () => {
         cy.get('[data-cy="inputEmail1"]')                   // data-cy --> Most Recommended
     })
 
-    it('locators methods', () => {
+    it.only('locators methods', () => {
         // Theory --> 3 locators methods
         // get() - find elements on the page by locator globally
         // find() - find child elements by locator
         // contains() - find web element by text (HTML text & by text & locator)
-        cy.contains('Sign in')                   // ---> cy. are looking for the first much of "Sign in"
-        cy.contains('[status="warning"]', 'Sign in')       // --> to find 2nd locator of "Sign in"
-        cy.contains('nb-card', 'Horizontal form')  // --> 2nd locator of "Sign in"
-        cy.contains('nb-card', 'Horizontal form').find('button')  // --> find 2nd locator of "Sign in"
-        cy.contains('nb-card', 'Horizontal form').contains('Sign in')
+        cy.contains('Sign in')        //---> cy. are looking for the first much of "Sign in"
+        cy.contains('[status="warning"]', 'Sign in') //--> to find 2nd locator of "Sign in" cause diff attr
+        cy.contains('nb-card', 'Horizontal form')  //--> 2nd locator of "Sign in"
+        cy.contains('nb-card', 'Horizontal form').find('button') //--> find 2nd locator of "Sign in" (2nd button)
+        cy.contains('nb-card', 'Horizontal form').contains('Sign in') // same as above
         cy.contains('nb-card', 'Horizontal form').find('[type="email"]')// --> find input on the 2nd form for email
-        // cy.contains('nb-card', 'Horizontal form').get('button') // --> don't use '.get'
+        // cy.contains('nb-card', 'Horizontal form').get('button') // --> don't use '.get' <--
     })
 
     // it('alias & then & wrap methods', () => {

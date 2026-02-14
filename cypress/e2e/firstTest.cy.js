@@ -177,7 +177,7 @@ describe('locator syntax rules', () => {
             })
     })
 
-    it.only('assertions', () => {
+    it('assertions', () => {
         // regular assertion with 'should'
         cy.get('[for="exampleInputEmail1"]').should('have.class', 'label')
         cy.get('[for="exampleInputEmail1"]').should('have.text', 'Email address')
@@ -194,15 +194,20 @@ describe('locator syntax rules', () => {
         })
     })
 
-    it('timeouts', () => {
+    it.only('timeouts', () => {
         cy.contains('Modal & Overlays').click()
         cy.contains('Dialog').click()
+
+        cy.contains('Open with delay 3 seconds').click()
+        cy.get('nb-dialog-container nb-card-header')
+            .should('have.text', 'Friendly reminder')
+        cy.get('nb-dialog-container nb-card-footer').should('contain.text', 'OK')
+        cy.contains('OK').click()
 
         cy.contains('Open with delay 10 seconds').click()
         cy.get('nb-dialog-container nb-card-header', { timeout: 11000 })
             .should('have.text', 'Friendly reminder')
-
-        // cy.get('nb-dialog-container nb-card-footer').should('contain.text', 'OK')
+        cy.get('nb-dialog-container nb-card-footer').should('contain.text', 'OK')
         cy.contains('OK').click()
     })
 

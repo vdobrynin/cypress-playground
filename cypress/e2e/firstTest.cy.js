@@ -194,7 +194,7 @@ describe('locator syntax rules', () => {
         })
     })
 
-    it.only('timeouts', () => {
+    it('timeouts', () => {
         cy.contains('Modal & Overlays').click()
         cy.contains('Dialog').click()
 

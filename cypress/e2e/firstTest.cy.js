@@ -129,7 +129,7 @@ describe('locator syntax rules', () => {
         })
     })
 
-    it.only('extracting values (text or property values (invoke command))', () => {
+    it('extracting values (text or property values (invoke command))', () => {
         // example 1 --> using then() (jquery method !!!)
         cy.get('[for="exampleInputEmail1"]').then(label => {    // label will represent object value
             const emailLabel = label.text()                          // assign jQuery method to the constant
@@ -177,15 +177,15 @@ describe('locator syntax rules', () => {
             })
     })
 
-    it('assertions', () => {
+    it.only('assertions', () => {
         // regular assertion with 'should'
         cy.get('[for="exampleInputEmail1"]').should('have.class', 'label')
         cy.get('[for="exampleInputEmail1"]').should('have.text', 'Email address')
-        cy.get('[for="exampleInputEmail1"]').should('contain', 'Email address')
+        // cy.get('[for="exampleInputEmail1"]').should('contain', 'Email address')
 
         cy.get('[for="exampleInputEmail1"]').then(label => {
-            expect(label).to.have.text('Email address')
             expect(label).to.contain('Email address')
+            expect(label).to.have.text('Email address')
         })
 
         cy.get('[for="exampleInputEmail1"]').invoke('text').then(emailLabel => {

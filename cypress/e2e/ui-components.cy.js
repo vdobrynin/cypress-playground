@@ -4,7 +4,7 @@ beforeEach('Open application', () => {
     cy.visit('/')
 })
 
-it.only('input fields', () => {
+it('input fields', () => {
     cy.contains('Forms').click()
     cy.contains('Form Layouts').click()
 
@@ -30,7 +30,7 @@ it.only('input fields', () => {
     // cy.get('#input-password').type('Welcome{enter}')
 })
 
-it('radio buttons', () => {
+it.only('radio buttons', () => {
     cy.contains('Forms').click()
     cy.contains('Form Layouts').click()
 
@@ -41,9 +41,9 @@ it('radio buttons', () => {
         cy.wrap(allRadioButtons).eq(0).should('not.be.checked')
         cy.wrap(allRadioButtons).eq(2).should('be.disabled')
     })
-    cy.contains('nb-card', 'Using the Grid').contains('Option 1').click() // or .check({ force: true })
-    cy.contains('nb-card', 'Using the Grid').contains('label', 'Option 2')
-        .find('input').check({ force: true })
+    // cy.contains('nb-card', 'Using the Grid').contains('Option 1').click() // or .check({ force: true })
+    cy.contains('nb-card', 'Using the Grid').contains('label', 'Option 1')
+        .find('input').check({ force: true }) // --> use check which is recommended 
 })
 
 it('checkboxes', () => {

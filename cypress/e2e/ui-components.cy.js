@@ -30,7 +30,7 @@ it('input fields', () => {
     // cy.get('#input-password').type('Welcome{enter}')
 })
 
-it.only('radio buttons', () => {
+it('radio buttons', () => {
     cy.contains('Forms').click()
     cy.contains('Form Layouts').click()
 
@@ -46,13 +46,13 @@ it.only('radio buttons', () => {
         .find('input').check({ force: true }) // --> use check which is recommended 
 })
 
-it('checkboxes', () => {
+it.only('checkboxes', () => {
     cy.contains('Modal & Overlays').click()
     cy.contains('Toastr').click()
 
-    // cy.get('[type="checkbox"]').check({ force: true }) // will not work 
-    // cy.get('[type="checkbox"]').uncheck({ force: true }) // will not work too
-    // cy.get('[type="checkbox"]').click({ force: true }) // will not work ether
+    cy.get('[type="checkbox"]').check({ force: true }) 
+    cy.get('[type="checkbox"]').uncheck({ force: true }) 
+    // cy.get('[type="checkbox"]').click({ force: true }) // will not work
 
     cy.get('[type="checkbox"]').check({ force: true }) // 
     cy.get('[type="checkbox"]').should('be.checked')   //

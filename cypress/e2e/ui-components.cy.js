@@ -236,7 +236,7 @@ it('sliders', () => {
     cy.get('[class="value temperature h1"]').should('contain.text', '18')
 })
 
-it.only('drag & drop', () => {
+it('drag & drop', () => {
     cy.contains('Extra Components').click()
     cy.contains('Drag & Drop').click()
 
@@ -244,16 +244,16 @@ it.only('drag & drop', () => {
     cy.get('#drop-list').trigger('drop')
 })
 
-it('iframes', () => {
+it.only('iframes', () => {
     cy.contains('Modal & Overlays').click()
     cy.contains('Dialog').click()
     cy.frameLoaded('[data-cy="esc-close-iframe"]')
 
-    // 1st option
+    // // 1st option
     cy.iframe('[data-cy="esc-close-iframe"]').contains('Open Dialog with esc close').click()
     cy.contains('Dismiss Dialog').click()
 
-    // 2nd option
+    // // 2nd option to execute group commands
     cy.enter('[data-cy="esc-close-iframe"]').then(getBody => {
         getBody().contains('Open Dialog with esc close').click()
         cy.contains('Dismiss Dialog').click()

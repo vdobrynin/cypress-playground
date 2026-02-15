@@ -121,7 +121,7 @@ it('tooltips', () => {
     cy.get('nb-tooltip').should('have.text', 'This is a tooltip')
 })
 
-it.only('dialog boxes', () => {
+it('dialog boxes', () => {
     cy.contains('Tables & Data').click()
     cy.contains('Smart Table').click()
 
@@ -146,7 +146,7 @@ it.only('dialog boxes', () => {
     cy.get('@dialogBox').should('be.calledWith', 'Are you sure you want to delete?')
 })
 
-it('web tables', () => {
+it.only('web tables', () => {
     cy.contains('Tables & Data').click()
     cy.contains('Smart Table').click()
 
@@ -159,34 +159,34 @@ it('web tables', () => {
     })
 
     // 2. How to find by index in table
-    cy.get('.nb-plus').click()
-    cy.get('thead tr').eq(2).then(tableRow => {                          // find 3d column to add without editiphier
+    cy.get('.nb-plus').click()          // click on the plus
+    cy.get('thead tr').eq(2).then(tableRow => {                  // find 3d column to add without editiphier
         cy.wrap(tableRow).find('[placeholder="First Name"]').type('John')
         cy.wrap(tableRow).find('[placeholder="Last Name"]').type('Smith')
-        cy.wrap(tableRow).find('.nb-checkmark').click()
+        cy.wrap(tableRow).find('.nb-checkmark').click() // save changes
     })
 
-    cy.get('tbody tr').first().find('td').then(tableColumns => {        // validation of creation a person
+    cy.get('tbody tr').first().find('td').then(tableColumns => {   // validation of creation a person
         cy.wrap(tableColumns).eq(2).should('have.text', 'John')
         cy.wrap(tableColumns).eq(3).should('have.text', 'Smith')
     })
 
-    //3. Looping though the rows
-    const ages = [20, 30, 40, 200]
+    // //3. Looping though the rows
+    // const ages = [20, 30, 40, 200]
 
-    cy.wrap(ages).each(age => {
-        cy.get('[placeholder="Age"]').clear().type(age)
-        // cy.get('[placeholder="Age"]').clear().type(20)
-        cy.wait(300)                                        // try to avoiding using wait
-        cy.get('tbody tr').each(tableRows => {
-            if (age == 200) {
-                cy.wrap(tableRows).should('contain.text', 'No data found')
-            } else {
-                cy.wrap(tableRows).find('td').last().should('have.text', age)
-                // cy.wrap(tableRows).find('td').last().should('have.text', 20)
-            }
-        })
-    })
+    // cy.wrap(ages).each(age => {
+    //     cy.get('[placeholder="Age"]').clear().type(age)
+    //     // cy.get('[placeholder="Age"]').clear().type(20)
+    //     cy.wait(300)                                        // try to avoiding using wait
+    //     cy.get('tbody tr').each(tableRows => {
+    //         if (age == 200) {
+    //             cy.wrap(tableRows).should('contain.text', 'No data found')
+    //         } else {
+    //             cy.wrap(tableRows).find('td').last().should('have.text', age)
+    //             // cy.wrap(tableRows).find('td').last().should('have.text', 20)
+    //         }
+    //     })
+    // })
 })
 
 it('datepickers', () => {

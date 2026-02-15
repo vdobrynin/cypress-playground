@@ -62,7 +62,7 @@ it('checkboxes', () => {
     cy.get('[type="checkbox"]').eq(2).uncheck({ force: true }) // uncheck another one
 })
 
-it.only('lists and dropdowns', () => {
+it('lists and dropdowns', () => {
     cy.contains('Modal & Overlays').click()
     cy.contains('Toastr').click()
 
@@ -82,34 +82,35 @@ it.only('lists and dropdowns', () => {
         })
     })
 
-    // example 1
+    // // example 1
     cy.get('nav nb-select').click()
     cy.get('.option-list nb-option').contains('Dark').click()        // '.options-list' class name
     cy.get('nav nb-select').should('contain', 'Dark')       // assertion
     cy.get('nav ngx-header nb-select button').should('have.css', 'background-color', 'rgb(25, 32, 56)')
+    // cy.get('nav ngx-header nb-select button').should('have.css', 'background-color', 'rgb(34, 43, 69)')
 
     // // example 2
-    cy.get('nav nb-select').then(dropdown => {
-        cy.wrap(dropdown).click()                  // looping through 4 elements w/index below
-        // cy.get('.options-list nb-option').each((listItem, index) => { 
-        //     const itemText = listItem.text().trim()
-        //     const colors = {
-        //         "Light": "rgb(255, 255, 255)",
-        //         "Dark": "rgb(25, 32, 56)",
-        //         "Cosmic": "rgb(50, 50, 89)",
-        //         "Corporate": "rgb(255, 255, 255)"
-        //     }
-        //     cy.wrap(listItem).click()
-        //     cy.wrap(dropdown).should('contain', itemText)
-        //     cy.get('nb-layout-header nav').should('have.css', 'background-color', colors[itemText])
-        //     if (index < 3) {
-        //         cy.wrap(dropdown).click()       // open dropdown list
-        //     }
-        // })
-    })
+    // cy.get('nav nb-select').then(dropdown => {
+    //     cy.wrap(dropdown).click()                       // looping through 4 elements w/index below
+    //     cy.get('.options-list nb-option').each((listItem, index) => { 
+    //         const itemText = listItem.text().trim()
+    //         const colors = {
+    //             "Light": "rgb(255, 255, 255)",
+    //             "Dark": "rgb(25, 32, 56)",
+    //             "Cosmic": "rgb(50, 50, 89)",
+    //             "Corporate": "rgb(255, 255, 255)"
+    //         }
+    //         cy.wrap(listItem).click()
+    //         cy.wrap(dropdown).should('contain', itemText)
+    //         cy.get('nb-layout-header nav').should('have.css', 'background-color', colors[itemText])
+    //         if (index < 3) {
+    //             cy.wrap(dropdown).click()       // open dropdown list
+    //         }
+    //     })
+    // })
 })
 
-it('tooltips', () => {
+it.only('tooltips', () => {
     cy.contains('Modal & Overlays').click()
     cy.contains('Tooltip').click()
 

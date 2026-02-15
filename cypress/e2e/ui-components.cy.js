@@ -147,7 +147,7 @@ it('dialog boxes', () => {
     cy.get('@dialogBox').should('be.calledWith', 'Are you sure you want to delete?')
 })
 
-it.only('web tables', () => {
+it('web tables', () => {
     cy.contains('Tables & Data').click()
     cy.contains('Smart Table').click()
 
@@ -188,46 +188,46 @@ it.only('web tables', () => {
     })
 })
 
-it('datepickers', () => {
+it.only('datepickers', () => {
     cy.contains('Forms').click()
     cy.contains('Datepicker').click()
 
-    function selectDateFromCurrentDay(day) {
+    // function selectDateFromCurrentDay(day) {
         let date = new Date()
-        date.setDate(date.getDate() + day)
-        // date.setDate((date.getDate() + 200))  // --> this is hardcoded day
-        // console.log(date)                                                    // --> to find date in DevTools   
-        let futureDay = date.getDate()                                             // change date to the day
-        let futureMonthLong = date.toLocaleDateString('en-US', { month: 'long' })
-        let futureMonthShort = date.toLocaleDateString('en-US', { month: 'short' })
-        let futureYear = date.getFullYear()
-        let dateToAssert = `${futureMonthShort} ${futureDay}, ${futureYear}`    // re-write to be dynamic
-        // let dateToAssert = `Oct ${futureDay}, 2025`                              // change date to the day
+        // date.setDate(date.getDate() + day)
+        date.setDate(date.getDate() + 5)  // --> this is hardcoded day
+        // console.log(date)                                                    //--> to find date in DevTools   
+        let futureDay = date.getDate()                                          // change date to the day
+    //     let futureMonthLong = date.toLocaleDateString('en-US', { month: 'long' })
+    //     let futureMonthShort = date.toLocaleDateString('en-US', { month: 'short' })
+    //     let futureYear = date.getFullYear()
+        // let dateToAssert = `${futureMonthShort} ${futureDay}, ${futureYear}`  // re-write to be dynamic
+        let dateToAssert = `Feb ${futureDay}, 2026`                // hardcoded --> change date to the day
 
-        cy.get('nb-calendar-view-mode').invoke('text').then(calendarMonthAndYear => {
-            if (!calendarMonthAndYear.includes(futureMonthLong) || !calendarMonthAndYear.includes(futureYear)) {
-                cy.get('[data-name="chevron-right"]').click()
-                selectDateFromCurrentDay(day)
-                // selectDateFromCurrentDay()
-            } else {
-                cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
-            }
-        })
-        return dateToAssert
-    }
+    //     cy.get('nb-calendar-view-mode').invoke('text').then(calendarMonthAndYear => {
+    //         if (!calendarMonthAndYear.includes(futureMonthLong) || !calendarMonthAndYear.includes(futureYear)) {
+    //             cy.get('[data-name="chevron-right"]').click()
+    //             selectDateFromCurrentDay(day)
+    //             // selectDateFromCurrentDay()
+    //         } else {
+    //             cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
+    //         }
+    //     })
+    //     return dateToAssert
+    // }
 
     cy.get('[placeholder="Form Picker"]').then(input => {
-        // cy.contains('nb-card', 'Common Datepicker').find('input').then(input => { // old version of function
         cy.wrap(input).click()
-        const dateToAssert = selectDateFromCurrentDay(20) // --> calling function above to choose thy we want 
+        // const dateToAssert = selectDateFromCurrentDay(20) //--> calling function above to choose thy we want 
         // selectDateFromCurrentDay()
-        cy.wrap(input).should('have.value', dateToAssert)                       // assertion v.1 dynamic
+        // cy.wrap(input).should('have.value', dateToAssert)                       // assertion v.1 dynamic
         // cy.wrap(input).invoke('prop', 'value').should('contain', dateToAssert)  // assertion v.2 variation
 
-        // cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
-        // cy.get('.day-cell').not('.bounding-month').contains(25).click()   //--> this was hardcoded day
+        cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
+        // cy.get('.day-cell').not('.bounding-month').contains(19).click()   //--> this was hardcoded day
 
-        // cy.wrap(input).should('have.value', 'Sep 25, 2025')                           
+        cy.wrap(input).should('have.value', dateToAssert)
+        // cy.wrap(input).should('have.value', 'Feb 19, 2026')   // hardcoded                        
     })
 })
 

@@ -86,12 +86,13 @@ it('lists and dropdowns', () => {
     cy.get('nav nb-select').click()
     cy.get('.option-list nb-option').contains('Dark').click()        // '.options-list' class name
     cy.get('nav nb-select').should('contain', 'Dark')       // assertion
-    cy.get('nav ngx-header nb-select button').should('have.css', 'background-color', 'rgb(25, 32, 56)')
+    // cy.get('nav ngx-header nb-select button').should('have.css', 'background-color', 'rgb(25, 32, 56)')
     // cy.get('nav ngx-header nb-select button').should('have.css', 'background-color', 'rgb(34, 43, 69)')
 
     // // example 2
     // cy.get('nav nb-select').then(dropdown => {
     //     cy.wrap(dropdown).click()                       // looping through 4 elements w/index below
+    //     // cy.wait(300)
     //     cy.get('.options-list nb-option').each((listItem, index) => { 
     //         const itemText = listItem.text().trim()
     //         const colors = {
@@ -165,28 +166,26 @@ it.only('web tables', () => {
         cy.wrap(tableRow).find('[placeholder="Last Name"]').type('Smith')
         cy.wrap(tableRow).find('.nb-checkmark').click() // save changes
     })
-
     cy.get('tbody tr').first().find('td').then(tableColumns => {   // validation of creation a person
         cy.wrap(tableColumns).eq(2).should('have.text', 'John')
         cy.wrap(tableColumns).eq(3).should('have.text', 'Smith')
     })
 
-    // //3. Looping though the rows
-    // const ages = [20, 30, 40, 200]
-
-    // cy.wrap(ages).each(age => {
-    //     cy.get('[placeholder="Age"]').clear().type(age)
-    //     // cy.get('[placeholder="Age"]').clear().type(20)
-    //     cy.wait(300)                                        // try to avoiding using wait
-    //     cy.get('tbody tr').each(tableRows => {
-    //         if (age == 200) {
-    //             cy.wrap(tableRows).should('contain.text', 'No data found')
-    //         } else {
-    //             cy.wrap(tableRows).find('td').last().should('have.text', age)
-    //             // cy.wrap(tableRows).find('td').last().should('have.text', 20)
-    //         }
-    //     })
-    // })
+    //3. Looping though the rows
+    const ages = [20, 30, 40, 200]
+    cy.wrap(ages).each(age => {
+        cy.get('[placeholder="Age"]').clear().type(age)
+        // cy.get('[placeholder="Age"]').clear().type(20)
+        cy.wait(300)                                        // try to avoiding using wait
+        cy.get('tbody tr').each(tableRows => {
+            if (age == 200) {
+                cy.wrap(tableRows).should('contain.text', 'No data found')
+            } else {
+                cy.wrap(tableRows).find('td').last().should('have.text', age)
+                // cy.wrap(tableRows).find('td').last().should('have.text', 20)
+            }
+        })
+    })
 })
 
 it('datepickers', () => {

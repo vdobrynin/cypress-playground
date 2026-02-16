@@ -6,7 +6,7 @@ import { onDatepickerPage } from "../page-objects/datepickerPage"
 
 beforeEach('open application', () => {
     cy.openHomePage()                       // custom command at command.js
-    // cy.visit('/')
+    // cy.visit('/')                    //--> we change at #51 custom command to above  
 })
 
 it('navigation test', () => {

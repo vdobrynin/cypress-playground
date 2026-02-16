@@ -1,5 +1,5 @@
 
-function selectDateFromCurrentDay(day) {           // copy/paste from ui-components
+function selectDateFromCurrentDay(day) {           // copy/paste from ui-components to use for page object
     let date = new Date()
     date.setDate(date.getDate() + day)
     let futureDay = date.getDate()                                             // change date to the day
@@ -19,29 +19,28 @@ function selectDateFromCurrentDay(day) {           // copy/paste from ui-compone
     return dateToAssert
 }
 
-export class DatepickerPage {
+class DatepickerPage {
     selectCommonDatepickerDateFromToday(numberOfDaysFromToday) {
         cy.get('[placeholder="Form Picker"]').then(input => {
-            // cy.contains('nb-card', 'Common Datepicker').find('input').then(input => { // OR
+            // cy.contains('nb-card', 'Common Datepicker').find('input').then(input => { //--> OR
             cy.wrap(input).click()
             let dateAssert = selectDateFromCurrentDay(numberOfDaysFromToday)
-            cy.wrap(input).should('have.value', dateAssert)
-            cy.wrap(input).invoke('prop', 'value').should('contain', dateAssert)
+            cy.wrap(input).should('have.value', dateAssert)                 // assertion
+            cy.wrap(input).invoke('prop', 'value').should('contain', dateAssert) // diff assertion
         })
     }
 
     selectRangeDatepickerFromToday(numberOfDaysFromTodayStart, numberOfDaysFromTodayEnd) {
         cy.get('[placeholder="Range Picker"]').then(input => {
-            // cy.contains('nb-card', 'Datepicker With Range').find('input').then(input => {
+            // cy.contains('nb-card', 'Datepicker With Range').find('input').then(input => { //--> OR
             cy.wrap(input).click()
             const dateToAssertStart = selectDateFromCurrentDay(numberOfDaysFromTodayStart)
             const dateToAssertEnd = selectDateFromCurrentDay(numberOfDaysFromTodayEnd)
             const finalDate = `${dateToAssertStart} - ${dateToAssertEnd}`
-            // const finalDate = dateAssertFirst + ' - ' + dateAssertSecond // page object lecture #49
-            cy.wrap(input).should('have.value', finalDate)
-            cy.wrap(input).invoke('prop', 'value').should('contain', finalDate)
+            // const finalDate = dateToAssertStart + ' - ' + dateToAssertEnd // page object lecture #49 (old)
+            cy.wrap(input).should('have.value', finalDate)                  // assertion
+            cy.wrap(input).invoke('prop', 'value').should('contain', finalDate) // diff assertion
         })
     }
 }
-
 export const onDatepickerPage = new DatepickerPage()

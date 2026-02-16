@@ -9,18 +9,18 @@ beforeEach('open application', () => {
     // cy.visit('/')
 })
 
-it.only('navigation test', () => {
+it('navigation test', () => {
     navigateTo.formLayoutsPage()
     navigateTo.datepickerPage()
     navigateTo.tooltipPage()
     navigateTo.toastrPage()
 })
 
-it('test with page object', () => {
+it.only('test with page object', () => {     //--> parametrized object method (to get it reuseable)
     navigateTo.formLayoutsPage()
     onFormLayoutsPage.submitUsingTheGridForm('test@test.com', 'Welcome', 1)
-    // onFormLayoutsPage.submitBasicForm('artem@test.com', 'Welcome', true) // checkbox is check & submit both
-    onFormLayoutsPage.submitBasicForm('artem@test.com', 'Welcome', false) // checkbox not checked & but submit 
+    // onFormLayoutsPage.submitBasicForm('artem@test.com', 'Welcome', true)// checkbox is checked (selected) & submit
+    onFormLayoutsPage.submitBasicForm('artem@test.com', 'Welcome', false)// checkbox not checked & but submit 
     navigateTo.datepickerPage()
     onDatepickerPage.selectCommonDatepickerDateFromToday(5)
     onDatepickerPage.selectRangeDatepickerFromToday(10, 50)

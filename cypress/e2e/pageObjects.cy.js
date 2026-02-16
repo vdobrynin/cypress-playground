@@ -21,7 +21,7 @@ it('test with page object', () => {
     onFormLayoutsPage.submitUsingTheGridForm('test@test.com', 'Welcome', 1)
     // onFormLayoutsPage.submitBasicForm('artem@test.com', 'Welcome', true) // checkbox is check & submit both
     onFormLayoutsPage.submitBasicForm('artem@test.com', 'Welcome', false) // checkbox not checked & but submit 
-    // navigateTo.datepickerPage()
-    // onDatepickerPage.selectCommonDatepickerDateFromToday(5)
-    // onDatepickerPage.selectRangeDatepickerFromToday(10, 50)
+    navigateTo.datepickerPage()
+    onDatepickerPage.selectCommonDatepickerDateFromToday(5)
+    onDatepickerPage.selectRangeDatepickerFromToday(10, 50)
 })

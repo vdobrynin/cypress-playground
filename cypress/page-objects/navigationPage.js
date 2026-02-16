@@ -5,7 +5,6 @@ function selectGroupMenuItem(groupItemName) { // --> creating the function to ex
             cy.contains('a', groupItemName).click()
         }
     })
-
     // --> 2nd variant to expand menu or not
     // cy.contains('a', groupItemName).then(menu => {
     //     cy.wrap(menu).find('.expand-state g g').invoke('attr', 'data-name').then(attr => {

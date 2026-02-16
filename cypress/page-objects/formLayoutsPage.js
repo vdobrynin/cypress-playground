@@ -1,12 +1,12 @@
 
 class FormLayoutsPage {
     /**
-     * Method to submit Using The Grid form with valid user credentials
+     * Method to submit 'Using The Grid form' with valid user credentials
      * @param {string} - valid user email 
      * @param {string} - valid user password  of the option radio button. Start from 0.
      * @param {number} optionIndex - provide index
      */
-    // --> grid for submission in form
+    //               //--> grid for submission in form
     submitUsingTheGridForm(email, password, optionIndex) { 
         cy.contains('nb-card', 'Using the Grid').then(form => {
             cy.wrap(form).find('[placeholder="Email"]').type(email)
@@ -16,7 +16,7 @@ class FormLayoutsPage {
         })
     }
 
-    // --> basic form submission
+    //--> basic form submission
     submitBasicForm(email, password, isCheckboxSelected) {
         cy.contains('nb-card', 'Basic form').find('form').then(form => {
             cy.wrap(form).find('[placeholder="Email"]').type(email)

@@ -6,7 +6,11 @@
   "license": "ISC",
   "main": "cypress.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:smoke-firefox": "npx cypress run --spec 'cypress/e2e/firstTest.cy.js' --browser firefox",
+    "cypress:smoke-chrome": "npx cypress run --spec 'cypress/e2e/firstTest.cy.js' --browser chrome",
+    "cypress:smoke-all": "npm run cypress:smoke-firefox && npm run cypress:smoke-chrome",
+    "cypress:smoke-parallel": "npm run cypress:smoke-firefox & npm run cypress:smoke-chrome"
   },
   "devDependencies": {
     "cypress": "^15.10.0",

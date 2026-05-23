@@ -13,7 +13,7 @@
     "cypress:smoke-parallel": "npm run cypress:smoke-firefox & npm run cypress:smoke-chrome"
   },
   "devDependencies": {
-    "cypress": "^15.10.0",
+    "cypress": "^15.15.0",
     "cypress-iframe": "^1.0.1"
   }
 }
